@@ -1,0 +1,77 @@
+# Continuous Bayesian CP Decomposition
+
+A research-oriented PyTorch implementation of **continuous Bayesian CP decomposition** with **soft spike-and-slab shrinkage**.
+
+This repo is built around one practical conclusion: for continuous tensor atoms, plain variational Bayes is often too soft, while unrestricted forward growth is unstable. The most promising middle ground is:
+
+- continuous CP factors,
+- Gaussian slab over coefficients,
+- soft spike-and-slab support shrinkage,
+- patient pruning,
+- conservative duplicate merging,
+- CPU-native logic with GPU acceleration for heavy tensor operations.
+
+## What is in this repo
+
+- `src/continuous_bayesian_cp/model.py` — the main implementation
+- `examples/run_synthetic.py` — minimal end-to-end example
+- `tests/test_smoke.py` — smoke tests
+- `docs/algorithm.md` — algorithm notes and design rationale
+- `docs/repo_layout.md` — repo structure and usage notes
+
+## Installation
+
+```bash
+pip install -r requirements.txt
+```
+
+or
+
+```bash
+pip install -e .
+```
+
+## Quick start
+
+```python
+import torch
+from continuous_bayesian_cp import ContinuousBayesianCP
+
+Y = torch.randn(7, 6, 5)
+model = ContinuousBayesianCP(rank_init=6, max_iters=50, device="auto", seed=17)
+result = model.fit(Y)
+Xhat = model.reconstruct()
+print(result.rank_final, result.device)
+```
+
+## Run the example
+
+```bash
+python examples/run_synthetic.py
+```
+
+## Run tests
+
+```bash
+pytest -q
+```
+
+## CPU/GPU behaviour
+
+This repo is **CPU-native in control flow** and **GPU-accelerated in tensor algebra**.
+
+Set:
+- `device="cpu"` for CPU only
+- `device="cuda"` for GPU only
+- `device="auto"` to use CUDA when available
+
+## Current limitations
+
+- no mini-batch or streaming mode,
+- no automatic hyperparameter tuning,
+- no full ELBO-based support posterior,
+- no large-scale benchmark harness yet.
+
+## License
+
+MIT
