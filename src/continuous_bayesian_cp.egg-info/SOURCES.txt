@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+src/continuous_bayesian_cp/__init__.py
+src/continuous_bayesian_cp/model.py
+src/continuous_bayesian_cp.egg-info/PKG-INFO
+src/continuous_bayesian_cp.egg-info/SOURCES.txt
+src/continuous_bayesian_cp.egg-info/dependency_links.txt
+src/continuous_bayesian_cp.egg-info/requires.txt
+src/continuous_bayesian_cp.egg-info/top_level.txt
+tests/test_smoke.py
